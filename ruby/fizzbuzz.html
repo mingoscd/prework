@@ -53,12 +53,21 @@ gets.chomp
 				</code>
 			</div>
 			<div class="button-layer">
-				<button disabled><a href="">Execute</a></button>
 				<button><a href="cp.rb" download>Download</a></button>				
 			</div>
 
 			<div class="prompt">
-				<iframe src="http://codepad.org/6dKkhmzF" frameborder="0"></iframe>
+				<iframe id="iframe-prompt" src="http://codepad.org/6dKkhmzF" frameborder="0"></iframe>
 			</div>
 		</section>
 	</body>
+<script>
+	(function(){
+		var x = document.getElementById("iframe-prompt");
+		var y = (x.contentWindow || x.contentDocument);
+		console.log(y);
+		if (y.document)
+			y = y.document;
+		y.body.margin-top = "-120px";
+	})();
+</script>
