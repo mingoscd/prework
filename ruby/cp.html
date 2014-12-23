@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Exercise 1</title>
+		<link rel="stylesheet" href="../estilos.css">
+	</head>
+	<body>
+		<header>
+			<figure>
+				<img src="http://tech.co/wp-content/uploads/2014/04/iron_hack.png" alt="">
+			</figure>
+			<div>
+				<h1>Ruby prework</h1>
+			</div>
+		</header>
+		<section>
+			<p><strong>Exercise 1:</strong> script that asks for two file names and copies the contents of one into the other</p>
+			<p>( Note: can not run it online for security reasons )</p>
+			<br>
+			<div class="tab">
+				<div class="tab-bg"></div>
+				<span>cp.rb</span>
+			</div>
+			<div class="code-text">
+				<code>
+					puts "What is the source file?"  <br>
+					source = gets.chomp <br>
+					source_content = IO.read(source) <br>
+					puts "What is the destination file?" <br>
+					target = gets.chomp <br>
+					IO.write(target, source_content) <br>
+				</code>
+			</div>
+			<div class="button-layer">
+				<button disabled><a href="">Execute</a></button>
+				<button><a href="cp.rb" download>Download</a></button>				
+			</div>
+		</section>
+	</body>

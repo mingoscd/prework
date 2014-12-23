@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Exercise 2</title>
+		<link rel="stylesheet" href="../estilos.css">
+	</head>
+	<body>
+		<header>
+			<figure>
+				<img src="http://tech.co/wp-content/uploads/2014/04/iron_hack.png" alt="">
+			</figure>
+			<div>
+				<h1>Ruby prework</h1>
+			</div>
+		</header>
+		<section>
+			<p><strong>Exercise 2:</strong>Imagine you are eleven years old, and in the five minutes before the end of the lesson, your Math teacher decides he should make his class more "fun" by introducing a "game". He explains that he is going to point at each pupil in turn and ask them to say the next number in sequence, starting from one. The "fun" part is that if the number is divisible by three, you instead say "Fizz" and if it is divisible by five you say "Buzz". </p>
+			<p>( Note: the online script set the number of students as 19 by default )</p>
+			<br>
+			<div class="tab">
+				<div class="tab-bg"></div>
+				<span>fizzbuzz.rb</span>
+			</div>
+			<div class="code-text">
+				<code>
+<pre style="color: orange; font-family: monospace">
+def fizzbuzz(n)
+	if n%3==0 && n%5==0
+		return "FizzBuzz"
+	elsif n%3==0
+		return "Fizz"
+	elsif n%5==0
+		return "Buzz"
+	else
+		return n
+	end 		
+end
+</pre>
+
+<pre style="color: green; font-family: monospace">
+puts "How many students are in the class?"
+number = gets.chomp.to_i
+array = [*1..number]
+
+for i in array
+	response = fizzbuzz(i)
+	puts "#{response}"
+end
+
+gets.chomp
+</pre>
+				</code>
+			</div>
+			<div class="button-layer">
+				<button disabled><a href="">Execute</a></button>
+				<button><a href="cp.rb" download>Download</a></button>				
+			</div>
+
+			<div class="prompt">
+				<iframe src="http://codepad.org/6dKkhmzF" frameborder="0"></iframe>
+			</div>
+		</section>
+	</body>
