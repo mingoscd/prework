@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Exercise 3</title>
+		<link rel="stylesheet" href="../estilos.css">
+	</head>
+	<body>
+		<header>
+			<figure>
+				<img src="http://tech.co/wp-content/uploads/2014/04/iron_hack.png" alt="">
+			</figure>
+			<div>
+				<h1>Ruby prework</h1>
+			</div>
+		</header>
+		<section>
+			<p><strong>Exercise 3:</strong>Write a program that provides us with a ShoppingCart class. The class should help us calculate the price of various items we add to it.</p>
+			<ul class="specifications">
+			 	<li>By default, items will have no discount.</li>
+			 	<li>If an item has a discount, it should be calculated by calling a discount method on that item.</li>
+			 	<li>Fruits have no discount during weekdays but on weekends they have a 10% discount.</li>
+			 	<li>Housewares have no discount unless their unit price is more than 100€ / $100. In that case they have a 5% discount.</li>
+			 	<li>When a customer has more than 5 items in their cart, they get a 10% discount for that purchase.</li>
+			</ul> 
+			<p style="margin-left: 5em">Create a shop that sells the following items <br>
+				<ul class="specifications">
+				 	<li>Bananas: 10€ / $10 each</li>
+				 	<li>Orange Juice: 10€ / $10 each</li>
+				 	<li>Rice: 1€ / $1 per unit</li>
+				 	<li>Vacuum Cleaner: 150€ / $150</li>
+				 	<li>Anchovies: 2€ / $2 each</li>
+				 </ul> 
+			</p>
+			<p style="margin-left: 5em">( Note: the day is by default saturday (6) )</p>
+			<br>
+			<div class="tab">
+				<div class="tab-bg"></div>
+				<span>shoppingcart.rb</span>
+			</div>
+			<div class="code-text" style="width: 37%">
+				<code>
+<pre style="color: orange; font-family: monospace">
+class Item
+	attr_accessor :prize
+	def initialize( prize)
+		@prize = prize
+	end 
+end
+
+class Fruit < Item
+end
+
+class Houseware < Item
+end
+
+class ShoppingCart
+	attr_accessor :prize, :itemcount
+	@prize = 0
+	@day
+	@itemcount
+	def initialize(day)
+		@day = day
+		@itemcount = 0
+	end
+
+	def discount(item)
+		if item.class.name == "Fruit" && (@day==6 || @day==7)
+			return item.prize*0.9
+		elsif item.class.name == "Houseware" && item.prize > 100
+			return item.prize*0.95
+		else
+			return item.prize
+		end
+	end
+
+	def addItem(item)
+		puts "Item added to the cart"
+		@prize = @prize.to_i + discount(item).to_i
+		@itemcount = @itemcount.to_i + 1.to_i
+	end
+
+	def pay()
+		if @itemcount >= 5
+			@prize = @prize*0.9 
+		end
+		puts "The prize of the products is: #{prize}"
+	end
+end
+</pre>
+
+<pre style="color: green; font-family: monospace">
+#create objects in the Shop
+bananas = Fruit.new 10
+orange_juice = Item.new 10
+rice = Item.new 1
+vacuum_cleaner = Houseware.new 150
+anchovies = Item.new 2
+
+cart = ShoppingCart.new 6    #create shoppingcart on day 6
+gets.chomp
+
+#buying products
+cart.addItem bananas
+cart.addItem orange_juice
+cart.addItem vacuum_cleaner
+cart.addItem anchovies
+cart.addItem rice
+#paying
+cart.pay
+gets.chomp
+</pre>
+				</code>
+			</div>
+			<div class="button-layer" style="width: 37%">
+				<button><a href="shoppingcart.rb" download>Download</a></button>				
+			</div>
+
+			<div class="prompt" style="top: 370px">
+				<iframe id="iframe-prompt" src="http://codepad.org/YgbdoQfk" frameborder="0" style="height: 1300px"></iframe>
+			</div>
+		</section>
+	</body>
+<script>
+	(function(){
+		var x = document.getElementById("iframe-prompt");
+		var y = (x.contentWindow || x.contentDocument);
+		console.log(y);
+		if (y.document)
+			y = y.document;
+		y.body.margin-top = "-120px";
+	})();
+</script>
