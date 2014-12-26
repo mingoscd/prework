@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Exercise 4</title>
+		<link rel="stylesheet" href="../estilos.css">
+	</head>
+	<body>
+		<header>
+			<figure>
+				<img src="http://tech.co/wp-content/uploads/2014/04/iron_hack.png" alt="">
+			</figure>
+			<div>
+				<h1>Ruby prework</h1>
+			</div>
+		</header>
+		<section>
+			<p><strong>Exercise 4:</strong>Write a function that receives a sentence and returns an array with the sentence's words sorted alphabetically. Ignore case and punctuation.</p>
+			<br>
+			<div class="tab">
+				<div class="tab-bg"></div>
+				<span>wordsort.rb</span>
+			</div>
+			<div class="code-text" style="width: 37%">
+				<code>
+<pre style="color: orange; font-family: monospace">
+def wordsort( str )
+	str_no_puntuation = str.gsub(/[,.¡!?¿]/,'')
+	array = str_no_puntuation.split.sort_by{ |word| word.downcase }
+	print str , " =>\t"
+	(0..array.length-2).each { |i|
+		print array[i], ", "
+	}
+	print "#{array[array.length-1]} \n"
+end
+
+</pre>
+
+<pre style="color: green; font-family: monospace">
+wordsort("This is, a. test!")
+wordsort("Another test? Yes, this is the second test!")
+gets.chomp
+
+</pre>
+				</code>
+			</div>
+			<div class="button-layer"  style="width: 37%">
+				<button><a href="wordsort.rb" download>Download</a></button>				
+			</div>
+
+			<div class="prompt">
+				<iframe id="iframe-prompt" src="http://codepad.org/5CmannTw" frameborder="0" style="height:380px"></iframe>
+			</div>
+		</section>
+	</body>
+</html>
