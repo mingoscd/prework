@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Exercise 5</title>
+		<link rel="stylesheet" href="../estilos.css">
+	</head>
+	<body>
+		<header>
+			<figure>
+				<img src="http://tech.co/wp-content/uploads/2014/04/iron_hack.png" alt="">
+			</figure>
+			<div>
+				<h1>Ruby prework</h1>
+			</div>
+		</header>
+		<section>
+			<p><strong>Exercise 5:</strong>In cryptography, a <strong>Caesar cipher  </strong>(also known as Caesar's cipher, the shift cipher, Caesar's code or Caesar shift) is one of the simplest and most widely known encryption techniques. It is a type of substitution cipher in which each letter in the plaintext is replaced by a letter some fixed number of positions down the alphabet. For example, with a left shift of 3, D would be replaced by A, E would become B, and so on. The method is named after Julius Caesar, who used it in his private correspondence.</p>
+			<p>( Note: the online page <strong>not support</strong> the method ord used in the script so <strong>download the file to run it</strong> )</p>
+			<br>
+			<div class="tab">
+				<div class="tab-bg"></div>
+				<span>cesar.rb</span>
+			</div>
+			<div class="code-text" style="width:50%;">
+				<code>
+<pre style="color: orange; font-family: monospace">
+def cesar_cipher(str, n)
+	if n.to_i == 0
+		return puts "Incorrect cipher number"
+	end
+	print str, "  =>  "
+	str.downcase.gsub(/./){ |i|
+		if i.ord < 64  #simbols not converted
+			cipher_letter = i.ord.to_i
+		else
+			cipher_letter = i.ord-n.to_i
+
+			if cipher_letter < 97 #go back to the end of alphabet
+				cipher_letter = cipher_letter + 26
+			elsif cipher_letter > 122 #go back to the begin of alphabet
+				cipher_letter = cipher_letter - 26
+			end
+
+		end
+		print cipher_letter.chr
+	}
+	print "\n"
+end
+</pre>
+
+<pre style="color: green; font-family: monospace">
+cesar_cipher("the password is secret", -4)
+cesar_cipher("the password is secret", -3)
+cesar_cipher("the password is secret", -2)
+cesar_cipher("the password is secret", -1)
+cesar_cipher("the password is secret", 1)
+cesar_cipher("the password is secret", 2)
+cesar_cipher("the password is secret", 3)
+gets.chomp
+</pre>
+				</code>
+			</div>
+			<div class="button-layer"  style="width:50%;">
+				<button><a href="cesar.rb" download>Download</a></button>				
+			</div>
+
+		</section>
+	</body>
+</html>
