@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Exercise 2</title>
+		<link rel="stylesheet" href="../estilos.css">
+	</head>
+	<body>
+		<header>
+			<figure>
+				<img src="http://tech.co/wp-content/uploads/2014/04/iron_hack.png" alt="">
+			</figure>
+			<div>
+				<h1>Javascript prework</h1>
+			</div>
+		</header>
+		<section>
+			<h3><strong>Exercise 2:</strong></h3>
+			<p>The Mars Rover Kata is an exercise taken from the prework sou you should have faced it before. Here you have the formulation, try to finish a working version before assiting to the classroom:</p>
+			<ul class="specifications">
+				<li>Develop an api that moves a rover around on a grid.</li>
+				<li>You are given the initial starting point (x,y) of a rover and the direction (N,S,E,W) it is facing.</li>
+				<li>The rover receives a character array of commands.</li>
+				<li>Implement commands that move the rover forward/backward (f,b).</li>
+				<li>Implement commands that turn the rover left/right (l,r).</li>
+				<li>Implement wrapping from one edge of the grid to another. (planets are spheres after all)</li>
+				<li>Implement obstacle detection before each move to a new square. If a given sequence of commands encounters an obstacle, the rover moves up to the last possible point and reports the obstacle.</li>
+			</ul>
+			<br>
+			<div class="console-rover">
+				<form action="">
+					<fieldset>
+						<legend>Grid Generation</legend>
+						<span class="form-label">Width:</span><input id="gridX" type="number"><br> 
+						<span class="form-label">Height:</span><input id="gridY" type="number"><br>
+						<input type="submit" value="Generate Grid" onclick="generateGrid();">
+						<p id="grid-generation-result"></p> 
+					</fieldset>
+					<fieldset>
+						<legend>Obstacle Generation</legend>
+						<span class="form-label">X position:</span><input id="obstacleX" type="number"><br> 
+						<span class="form-label">Y position:</span><input id="obstacleY" type="number"><br>
+						<input type="submit" value="Generate obstacle" onclick="generateObstacle();">
+						<p id="obstacle-generation-result"></p> 
+					</fieldset>
+					<fieldset>
+						<legend>Rover Generation</legend>
+						<span class="form-label">X position:</span><input id="roverX" type="number"><br> 
+						<span class="form-label">Y position:</span><input id="roverY" type="number"><br>
+						<span class="form-label">Orientation:</span>
+							<select name="orientation" id="roverOrientation">
+								<option value="e" selected>East</option>
+								<option value="s">South</option>
+								<option value="w">West</option>
+								<option value="n">North</option>
+							</select><br>
+						<input type="submit" value="Generate obstacle" onclick="generateRover();">
+						<p id="rover-generation-result"></p> 
+					</fieldset>
+					<fieldset>
+						<legend>Rover Move</legend>
+						<button onclick="Rover.move('f')">W</button>
+						<button onclick="Rover.move('l')">A</button>
+						<button onclick="Rover.move('r')">S</button>
+						<button onclick="Rover.move('b')">D</button>
+						<p id="rover-move-result"></p> 
+					</fieldset>
+				</form>
+			</div>
+			<div>
+				<canvas id="moon" width="500px" height="500px"></canvas>
+			</div>
+
+		</section>
+	</body>
+	<script src="rover.js"></script>
+	<script type="text/Javascript">
+		function generateGrid(){
+			x = parseInt( document.getElementById("gridX").value);
+			y = parseInt( document.getElementById("gridY").value);
+			if( checkUnits(x, y, 10, 10) ){
+				Grid.init(x,y);
+				Grid.obstacle = [];
+				document.getElementById("grid-generation-result").innerHTML = "Grid Generated Correctly";
+			}else{
+				document.getElementById("grid-generation-result").innerHTML = "Grid Size Incorrect";
+			}
+		}
+
+		function generateObstacle(){
+			if( typeof(Grid) != 'undefined'){
+				x = parseInt( document.getElementById("obstacleX").value);
+				y = parseInt( document.getElementById("obstacleY").value);
+				if( checkUnits(x, y, Grid.sizeX, Grid.sizeY) ){
+					obstacle = [ document.getElementById("obstacleX").value, document.getElementById("obstacleY").value ];
+					if( !(typeof(Rover) != 'undefined' && obstacle[0] == Rover.position[0]  && obstacle[1] == Rover.position[1]) ){	
+						Grid.setObstacles(obstacle);
+						document.getElementById("obstacle-generation-result").innerHTML = "Obstacle generated!";
+					}else{
+						document.getElementById("obstacle-generation-result").innerHTML = "Obstacle can't be generated on Rover's position!";
+					}
+				}else{
+					document.getElementById("obstacle-generation-result").innerHTML = "Obstacle Position Incorrect";
+				}
+			}else{
+				document.getElementById("obstacle-generation-result").innerHTML = "First you must generate a grid!";
+			}
+		}
+
+		function generateRover(){
+			if( typeof(Grid) != 'undefined'){
+				x = parseInt( document.getElementById("roverX").value);
+				y = parseInt( document.getElementById("roverY").value);
+				orientation = document.getElementById("roverOrientation").value;
+				if( orientation.toLowerCase() != "n" || orientation.toLowerCase() != "e" || orientation.toLowerCase() != "w" || orientation.toLowerCase() != "s")
+					orientation = "e";
+				if( checkUnits(x, y, Grid.sizeX, Grid.sizeY) ){
+					Rover.init(x, y, orientation);
+					document.getElementById("rover-generation-result").innerHTML = "Rover generated!";
+				}else{
+					document.getElementById("rover-generation-result").innerHTML = "Rover Position Incorrect";
+				}
+			}else{
+				document.getElementById("rover-generation-result").innerHTML = "First you must generate a grid!";
+			}
+		}
+
+		function moveRover(event){
+			switch(event.keyCode){
+				case 87: //w
+					Rover.move('f');
+				break;
+				case 65: //a
+					Rover.move('l');
+				break;
+				case 83: //s
+					Rover.move('b');
+				break;
+				case 68: //d
+					Rover.move('r');
+				break;
+				default: console.log("not supported");
+				break;
+			}
+		}
+
+		function checkUnits(x,y,maxX,maxY){ 
+			result = ( (x<=0 || x > maxX || isNaN(x)) || (y<=0 || y > maxY || isNaN(y)) )? false:true;
+			return result;
+		}
+	</script>
+	<script type ="text/Javascript">
+		(function(){ window.onkeyup = moveRover; })()
+	</script>
+</html>
