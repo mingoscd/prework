@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Exercise 1</title>
+		<link rel="stylesheet" href="../estilos.css">
+	</head>
+	<body>
+		<header>
+			<figure>
+				<img src="http://tech.co/wp-content/uploads/2014/04/iron_hack.png" alt="">
+			</figure>
+			<div>
+				<h1>Javascript prework</h1>
+			</div>
+		</header>
+		<section>
+			<h3><strong>Exercise 1:</strong></h3>
+			<p>Write a function that receives an array of names and returns them in a string with , between them. The final two must be separated by and.</p>
+			<p> Write a function that receives an object and returns an array of its values.</p>
+			<br>
+			<div class="tab">
+				<div class="tab-bg"></div>
+				<span>arrayobject.js</span>
+			</div>
+			<div class="code-text">
+				<code>
+<pre style="color: orange; font-family: monospace">
+function prepare(names){
+    var response = "";
+    for (var i = 0; i < names.length-1; i++) {
+        if( i == names.length-2)
+            response += names[i];
+        else
+            response += names[i] + ", ";
+    }
+    response += " and " + names[names.length-1];
+    return response;
+}
+
+function objectToArray(object){
+    var array =[];
+    for (key in object){
+        array.push(object[key]);
+    }
+    return array;
+}
+</pre>
+
+<pre style="color: green; font-family: monospace">
+names = [ "Canada", "Mexico", "Turkey", "Japan" ];
+country = {
+    name: "Uruguay",
+    continent: "South America",
+    capital: "Montevideo",
+};
+
+console.log(prepare(names));
+console.log(objectToArray(country));
+</pre>
+				</code>
+			</div>
+			<div class="button-layer">
+				<button><a href="arrayobject.js" download>Download</a></button>				
+			</div>
+
+			<div class="prompt js-prompt">
+				<iframe id="iframe-prompt" src="http://repl.it/7Cb/3" frameborder="0"></iframe>
+			</div>
+		</section>
+	</body>
+</html>
