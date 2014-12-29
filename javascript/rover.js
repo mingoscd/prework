@@ -12,7 +12,7 @@ var Grid = {
     thereIsObstacle: function (x, y) {
         for (var i = 0; i < this.obstacles.length; i++) {
             var obstacle = this.obstacles[i];
-            if (obstacle[0] === x && obstacle[1] === y) {
+            if (obstacle[0] == x && obstacle[1] == y) {
                 return true;
             }
         }
@@ -72,7 +72,6 @@ var Rover = {
                 }
             break;
         }
-
         if (Grid.thereIsObstacle(this.position[0], this.position[1])) {
             this.position = formerPosition;
         }
@@ -107,35 +106,35 @@ var Rover = {
     },
 
     turnRight: function () {
-        switch (this.direction) {
+        switch (this.orientation) {
             case 'n':
-                this.direction = 'e';
+                this.orientation = 'e';
             break;
             case 'e':
-                this.direction = 's';
+                this.orientation = 's';
             break;
             case 's':
-                this.direction = 'w';
+                this.orientation = 'w';
             break;
             case 'w':
-                this.direction = 'n';
+                this.orientation = 'n';
             break;
         }
     },
 
     turnLeft: function () {
-        switch (this.direction) {
+        switch (this.orientation) {
             case 'n':
-                this.direction = 'w';
+                this.orientation = 'w';
             break;
             case 'w':
-                this.direction = 's';
+                this.orientation = 's';
             break;
             case 's':
-                this.direction = 'e';
+                this.orientation = 'e';
             break;
             case 'e':
-                this.direction = 'n';
+                this.orientation = 'n';
             break;
         }
     }

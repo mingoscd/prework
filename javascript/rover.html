@@ -4,6 +4,7 @@
 		<meta charset="UTF-8">
 		<title>Exercise 2</title>
 		<link rel="stylesheet" href="../estilos.css">
+		<link rel="stylesheet" href="rover.css">
 	</head>
 	<body>
 		<header>
@@ -31,16 +32,16 @@
 				<form action="">
 					<fieldset>
 						<legend>Grid Generation</legend>
-						<span class="form-label">Width:</span><input id="gridX" type="number"><br> 
-						<span class="form-label">Height:</span><input id="gridY" type="number"><br>
-						<input type="submit" value="Generate Grid" onclick="generateGrid();">
+						<span class="form-label">Width:</span><input id="gridX" type="number" placeholder="max = 7"><br> 
+						<span class="form-label">Height:</span><input id="gridY" type="number" placeholder="max = 7"><br>
+						<input type="submit" class="gen-button" value="Generate Grid" onclick="generateGrid();return false;">
 						<p id="grid-generation-result"></p> 
 					</fieldset>
 					<fieldset>
 						<legend>Obstacle Generation</legend>
 						<span class="form-label">X position:</span><input id="obstacleX" type="number"><br> 
 						<span class="form-label">Y position:</span><input id="obstacleY" type="number"><br>
-						<input type="submit" value="Generate obstacle" onclick="generateObstacle();">
+						<input type="submit" class="gen-button" value="Generate Obstacle" onclick="generateObstacle();return false;">
 						<p id="obstacle-generation-result"></p> 
 					</fieldset>
 					<fieldset>
@@ -54,21 +55,22 @@
 								<option value="w">West</option>
 								<option value="n">North</option>
 							</select><br>
-						<input type="submit" value="Generate obstacle" onclick="generateRover();">
+						<input type="submit" class="gen-button" value="Generate Rover" onclick="generateRover();return false;">
 						<p id="rover-generation-result"></p> 
 					</fieldset>
 					<fieldset>
 						<legend>Rover Move</legend>
-						<button onclick="Rover.move('f')">W</button>
-						<button onclick="Rover.move('l')">A</button>
-						<button onclick="Rover.move('r')">S</button>
-						<button onclick="Rover.move('b')">D</button>
+						<span>You can move the Rover using the keyboard or pressing this buttons</span><br>
+						<button class="key gen-button" onclick="Rover.move('f');draw();return false;">W</button><br>
+						<button class="key gen-button" onclick="Rover.move('l');draw();return false;">A</button>
+						<button class="key gen-button" onclick="Rover.move('b');draw();return false;">S</button>
+						<button class="key gen-button" onclick="Rover.move('r');draw();return false;">D</button>
 						<p id="rover-move-result"></p> 
 					</fieldset>
 				</form>
 			</div>
-			<div>
-				<canvas id="moon" width="500px" height="500px"></canvas>
+			<div class="canvas-div">
+				<canvas id="moon" width="700px" height="700px"></canvas>
 			</div>
 
 		</section>
@@ -78,10 +80,11 @@
 		function generateGrid(){
 			x = parseInt( document.getElementById("gridX").value);
 			y = parseInt( document.getElementById("gridY").value);
-			if( checkUnits(x, y, 10, 10) ){
+			if( checkUnits(x, y, 7, 7) ){
 				Grid.init(x,y);
 				Grid.obstacle = [];
 				document.getElementById("grid-generation-result").innerHTML = "Grid Generated Correctly";
+				draw();
 			}else{
 				document.getElementById("grid-generation-result").innerHTML = "Grid Size Incorrect";
 			}
@@ -93,12 +96,9 @@
 				y = parseInt( document.getElementById("obstacleY").value);
 				if( checkUnits(x, y, Grid.sizeX, Grid.sizeY) ){
 					obstacle = [ document.getElementById("obstacleX").value, document.getElementById("obstacleY").value ];
-					if( !(typeof(Rover) != 'undefined' && obstacle[0] == Rover.position[0]  && obstacle[1] == Rover.position[1]) ){	
-						Grid.setObstacles(obstacle);
-						document.getElementById("obstacle-generation-result").innerHTML = "Obstacle generated!";
-					}else{
-						document.getElementById("obstacle-generation-result").innerHTML = "Obstacle can't be generated on Rover's position!";
-					}
+					Grid.setObstacles(obstacle);
+					document.getElementById("obstacle-generation-result").innerHTML = "Obstacle generated!";
+					draw();
 				}else{
 					document.getElementById("obstacle-generation-result").innerHTML = "Obstacle Position Incorrect";
 				}
@@ -112,11 +112,10 @@
 				x = parseInt( document.getElementById("roverX").value);
 				y = parseInt( document.getElementById("roverY").value);
 				orientation = document.getElementById("roverOrientation").value;
-				if( orientation.toLowerCase() != "n" || orientation.toLowerCase() != "e" || orientation.toLowerCase() != "w" || orientation.toLowerCase() != "s")
-					orientation = "e";
 				if( checkUnits(x, y, Grid.sizeX, Grid.sizeY) ){
 					Rover.init(x, y, orientation);
 					document.getElementById("rover-generation-result").innerHTML = "Rover generated!";
+					draw();
 				}else{
 					document.getElementById("rover-generation-result").innerHTML = "Rover Position Incorrect";
 				}
@@ -129,18 +128,21 @@
 			switch(event.keyCode){
 				case 87: //w
 					Rover.move('f');
+					draw();
 				break;
 				case 65: //a
 					Rover.move('l');
+					draw();
 				break;
 				case 83: //s
 					Rover.move('b');
+					draw();
 				break;
 				case 68: //d
 					Rover.move('r');
+					draw();
 				break;
-				default: console.log("not supported");
-				break;
+				default: break;
 			}
 		}
 
@@ -150,6 +152,56 @@
 		}
 	</script>
 	<script type ="text/Javascript">
-		(function(){ window.onkeyup = moveRover; })()
+		(function(){ 
+			window.onkeyup = moveRover; 
+			var canvas = document.getElementById("moon");
+	    	moon = canvas.getContext("2d");
+	    	bg = new Image();
+	    	bg.src = 'http://s2.www.astronomycameras.com/data/blog/20120213/assets/houston_moon_zoom.jpg'
+	    	rock = new Image();
+	    	rock.src = 'rock.png';
+	    	rocketR = new Image();
+			rocketL = new Image();
+			rocketU = new Image();
+			rocketD = new Image();
+	    	rocketR.src = 'rocketR.png';
+	    	rocketL.src = 'rocketL.png';
+	    	rocketU.src = 'rocketU.png';
+	    	rocketD.src = 'rocketD.png';
+		})();
+
+		function draw(){
+			if(Grid){
+				moon.clearRect ( 0 , 0 , 700, 700 );
+				moon.width = Grid.sizeX*100;
+				moon.height = Grid.sizeY*100;
+				moon.drawImage(bg,0,0, moon.width, moon.height);
+				hei = moon.height/Grid.sizeY;
+				wid = moon.width/Grid.sizeX;			
+			}
+			if(Grid.obstacles){
+				for( var i=0; i<Grid.obstacles.length; i++){
+					posX = (Grid.obstacles[i][0]*100)-100;
+					posY = ( Grid.sizeY - Grid.obstacles[i][1] ) * 100;
+					moon.drawImage(rock,posX,posY,wid,hei);
+				}	
+			}
+			if(Rover.position){
+				//patch to diferent units (0-Grid.sizeX-1) to (1-Grid.sizeX)
+				posX = (Rover.position[0] == 0)?(Grid.sizeX*100)-100:(Rover.position[0]*100)-100;
+				posY = (Rover.position[1] == 0)?0:( Grid.sizeY - Rover.position[1] ) * 100;
+				switch(Rover.orientation){
+					case 'e': moon.drawImage(rocketR,posX,posY,wid,hei);
+					break;
+					case 'n':moon.drawImage(rocketU,posX,posY,wid,hei);
+					break;
+					case 's': moon.drawImage(rocketD,posX,posY,wid,hei);
+					break;
+					case 'w': moon.drawImage(rocketL,posX,posY,wid,hei);
+					break;
+					default: break;
+				} 
+			}
+		}
 	</script>
 </html>
