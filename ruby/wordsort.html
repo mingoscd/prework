@@ -30,13 +30,7 @@ def wordsort( str )
 	array = str_no_puntuation.split.sort_by{ |word| word.downcase }
 	print str , " =>\t"
 	
-	array.each do |i|
-	   if i == array.last
-	        print i, "\n"
-	   else
-	        print i, ", "
-	   end
-	end
+	puts array.join(", ")
 	
 end
 
