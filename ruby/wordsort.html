@@ -26,12 +26,18 @@
 <pre style="color: orange; font-family: monospace">
 def wordsort( str )
 	str_no_puntuation = str.gsub(/[,.¡!?¿]/,'')
+
 	array = str_no_puntuation.split.sort_by{ |word| word.downcase }
 	print str , " =>\t"
-	(0..array.length-2).each { |i|
-		print array[i], ", "
-	}
-	print "#{array[array.length-1]} \n"
+	
+	array.each do |i|
+	   if i == array.last
+	        print i, "\n"
+	   else
+	        print i, ", "
+	   end
+	end
+	
 end
 
 </pre>
@@ -39,8 +45,6 @@ end
 <pre style="color: green; font-family: monospace">
 wordsort("This is, a. test!")
 wordsort("Another test? Yes, this is the second test!")
-gets.chomp
-
 </pre>
 				</code>
 			</div>
@@ -49,7 +53,7 @@ gets.chomp
 			</div>
 
 			<div class="prompt">
-				<iframe id="iframe-prompt" src="http://codepad.org/5CmannTw" frameborder="0" style="height:380px"></iframe>
+				<iframe id="iframe-prompt" src="http://repl.it/7Ph" frameborder="0" style="height:380px"></iframe>
 			</div>
 		</section>
 	</body>

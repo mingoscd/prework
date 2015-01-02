@@ -16,7 +16,6 @@
 		</header>
 		<section>
 			<p><strong>Exercise 2:</strong>Imagine you are eleven years old, and in the five minutes before the end of the lesson, your Math teacher decides he should make his class more "fun" by introducing a "game". He explains that he is going to point at each pupil in turn and ask them to say the next number in sequence, starting from one. The "fun" part is that if the number is divisible by three, you instead say "Fizz" and if it is divisible by five you say "Buzz". </p>
-			<p>( Note: the online script set the number of students as 19 by default )</p>
 			<br>
 			<div class="tab">
 				<div class="tab-bg"></div>
@@ -26,29 +25,26 @@
 				<code>
 <pre style="color: orange; font-family: monospace">
 def fizzbuzz(n)
-	if n%3==0 && n%5==0
-		return "FizzBuzz"
-	elsif n%3==0
-		return "Fizz"
-	elsif n%5==0
-		return "Buzz"
+	if n % 3 == 0 && n % 5 == 0
+		puts "FizzBuzz"
+	elsif n % 3 == 0
+		puts "Fizz"
+	elsif n % 5 == 0
+		puts "Buzz"
 	else
-		return n
+		puts n
 	end 		
 end
 </pre>
 
 <pre style="color: green; font-family: monospace">
+
 puts "How many students are in the class?"
 number = gets.chomp.to_i
-array = [*1..number]
 
-for i in array
-	response = fizzbuzz(i)
-	puts "#{response}"
-end
-
-gets.chomp
+(1..number).each {|i|
+	fizzbuzz(i)
+}
 </pre>
 				</code>
 			</div>
@@ -57,7 +53,7 @@ gets.chomp
 			</div>
 
 			<div class="prompt">
-				<iframe id="iframe-prompt" src="http://codepad.org/6dKkhmzF" frameborder="0"></iframe>
+				<iframe id="iframe-prompt" src="http://repl.it/7PZ" frameborder="0"></iframe>
 			</div>
 		</section>
 	</body>

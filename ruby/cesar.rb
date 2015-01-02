@@ -3,21 +3,20 @@ def cesar_cipher(str, n)
 		return puts "Incorrect cipher number"
 	end
 	print str, "  =>  "
-	str.downcase.gsub(/./){ |i|
+	str.downcase do |i|
 		if i.ord < 64  #simbols not converted
 			cipher_letter = i.ord.to_i
 		else
-			cipher_letter = i.ord-n.to_i
+			cipher_letter = i.ord - n.to_i
 
-			if cipher_letter < 97 #go back to the end of alphabet
+			if cipher_letter < "a".ord  #go back to the end of alphabet
 				cipher_letter = cipher_letter + 26
-			elsif cipher_letter > 122 #go back to the begin of alphabet
+			elsif cipher_letter > "z".ord  #go back to the begin of alphabet
 				cipher_letter = cipher_letter - 26
 			end
-
 		end
 		print cipher_letter.chr
-	}
+	end
 	print "\n"
 end
 
